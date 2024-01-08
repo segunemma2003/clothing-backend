@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/user/public_html/server.henrimars.com/
+    - export DEPLOYPATH=/home2/henrimar/public_html/server.henrimars.com/
     - /bin/cp -R * $DEPLOYPATH
     - chown -R user:user $DEPLOYPATH
     - chmod -R 755 $DEPLOYPATH
