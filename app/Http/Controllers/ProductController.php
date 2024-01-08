@@ -105,7 +105,7 @@ class ProductController extends Controller
     public function show($id)
     {
         try {
-            $product = Product::findOrFail($id);
+            $product = Product::with('images')->findOrFail($id);
 
             return response()->json([
                 'status' => 'success',

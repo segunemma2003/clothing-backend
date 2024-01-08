@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/user/public_html/server.henrimars.com/
+    - /bin/cp -R * $DEPLOYPATH
+    - chown -R user:user $DEPLOYPATH
+    - chmod -R 755 $DEPLOYPATH
+    - composer install
+    - /bin/cp -R .env.example $DEPLOYPATH/.env
+    - php artisn serve
