@@ -58,7 +58,11 @@ class ProductImageResource extends Resource
     ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
-                    ->multiple()
+                    ->getUploadedFileNameForStorageUsing(function ( $file): string {
+                        // return (string) str($file->getClientOriginalName())->prepend('custom-prefix-');
+                        return cloudinary()->uploadFile($file->getRealPath())->getSecurePath();
+                    })
+                    // ->multiple()
                     ->required(),
                 Forms\Components\Toggle::make('make_main')
                     ->required(),
@@ -72,7 +76,8 @@ class ProductImageResource extends Resource
                 Tables\Columns\TextColumn::make('product_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                ->width(50)->height(50),
                 Tables\Columns\IconColumn::make('make_main')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
