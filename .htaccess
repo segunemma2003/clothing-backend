@@ -1,7 +1,7 @@
 RewriteEngine on
 
 # serve existing files in the /public folder as if they were in /
-RewriteRule (.+) /public/$1 [L]
+RewriteRule (.+) /myaccount/public/$1 [L]
 
 # route everything else to /public/index.php
-RewriteRule ^ /public/index.php [L]
+RewriteRule ^ /myaccount/public/index.php [L]

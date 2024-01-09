@@ -13,7 +13,7 @@ class ShippingOrderPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class ShippingOrderPolicy
      */
     public function view(User $user, ShippingOrder $shippingOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class ShippingOrderPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class ShippingOrderPolicy
      */
     public function update(User $user, ShippingOrder $shippingOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class ShippingOrderPolicy
      */
     public function delete(User $user, ShippingOrder $shippingOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class ShippingOrderPolicy
      */
     public function restore(User $user, ShippingOrder $shippingOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class ShippingOrderPolicy
      */
     public function forceDelete(User $user, ShippingOrder $shippingOrder): bool
     {
-        //
+        return true;
     }
 }

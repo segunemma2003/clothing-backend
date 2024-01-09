@@ -13,7 +13,7 @@ class ProductOrderPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class ProductOrderPolicy
      */
     public function view(User $user, ProductOrder $productOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductOrderPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class ProductOrderPolicy
      */
     public function update(User $user, ProductOrder $productOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class ProductOrderPolicy
      */
     public function delete(User $user, ProductOrder $productOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductOrderPolicy
      */
     public function restore(User $user, ProductOrder $productOrder): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class ProductOrderPolicy
      */
     public function forceDelete(User $user, ProductOrder $productOrder): bool
     {
-        //
+        return true;
     }
 }
