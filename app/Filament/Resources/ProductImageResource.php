@@ -58,9 +58,12 @@ class ProductImageResource extends Resource
     ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
+                    ->imageEditor()
                     ->getUploadedFileNameForStorageUsing(function ( $file): string {
-                        // return (string) str($file->getClientOriginalName())->prepend('custom-prefix-');
-                        return cloudinary()->uploadFile($file->getRealPath())->getSecurePath();
+                        (string)  $filename =  str($file->getClientOriginalName())->prepend(time());
+                        $result = cloudinary()->uploadFile($file->getRealPath())->getSecurePath();
+                        // dd($result);
+                        return $result;
                     })
                     // ->multiple()
                     ->required(),
