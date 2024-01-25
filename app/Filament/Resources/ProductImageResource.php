@@ -76,7 +76,7 @@ class ProductImageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product_id')
+                Tables\Columns\TextColumn::make('product.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image')
