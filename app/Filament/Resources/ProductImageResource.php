@@ -65,8 +65,8 @@ class ProductImageResource extends Resource
                             'transformation'=> [
                                 'width' => 150,
                                 'height'=> 150,
-                                'quality'=>auto,
-                                'fetch_format'=>auto
+                                'quality'=>"auto",
+                                'fetch_format'=>"auto"
                             ]
                         ])->getSecurePath();
                         // dd($result);
