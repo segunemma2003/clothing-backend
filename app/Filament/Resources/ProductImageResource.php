@@ -61,7 +61,14 @@ class ProductImageResource extends Resource
                     ->imageEditor()
                     ->getUploadedFileNameForStorageUsing(function ( $file): string {
                         (string)  $filename =  str($file->getClientOriginalName())->prepend(time());
-                        $result = cloudinary()->uploadFile($file->getRealPath())->getSecurePath();
+                        $result = cloudinary()->uploadFile($file->getRealPath(),[
+                            'transformation'=> [
+                                'width' => 150,
+                                'height'=> 150,
+                                'quality'=>auto,
+                                'fetch_format'=>auto
+                            ]
+                        ])->getSecurePath();
                         // dd($result);
                         return $result;
                     })
