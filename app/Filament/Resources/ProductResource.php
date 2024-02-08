@@ -65,7 +65,7 @@ class ProductResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money("NGN")
                     ->sortable(),
                 Tables\Columns\TextColumn::make('availability')
                     ->searchable(),
