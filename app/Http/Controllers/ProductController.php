@@ -19,9 +19,29 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $q = $request->get('q');
-        $products = Product::with('images')->latest()->get();
+        $products = [];
         if(!is_null($q)){
+            if($q == "shirts"){
+                $products = Product::with('images')
+                            ->where('category', "Shirt")
+                            ->orWhere('category', "Shirts")
+                            ->where('category', "shirt")
+                            ->where('category', "shirts")
+                            ->latest()->get();
+            }else if($q == "2piece"){
+                $products = Product::with('images')->latest()->get();
+
+            }else{
+                if($q == "2piece"){
+                    $q = "2 piece";
+                }else if($q == "kaftan"){
+                    $q = "Kaftan";
+                }
+
             $products = Product::with('images')->where('category', $q)->latest()->get();
+        }
+        }else{
+            $products = Product::with('images')->latest()->get();
         }
 
 
