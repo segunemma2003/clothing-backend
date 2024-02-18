@@ -67,7 +67,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-        // try {
+        try {
             $validator = Validator::make($request->all(), [
 
                 "total_price" => "required",
@@ -158,13 +158,13 @@ class OrderController extends Controller
                 "status" => "success",
                 "data" => $order,
             ]);
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         "status" => "error",
-        //         "data"=> $e->getMessage(),
-        //         "message" =>  "An error occurred while processing the request.",
-        //     ], 522);
-        // }
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "error",
+                "data"=> $e->getMessage(),
+                "message" =>  "An error occurred while processing the request.",
+            ], 522);
+        }
 
     }
 
