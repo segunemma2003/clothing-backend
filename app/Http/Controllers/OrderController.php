@@ -67,7 +67,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-        try {
+        // try {
             $validator = Validator::make($request->all(), [
 
                 "total_price" => "required",
@@ -102,6 +102,7 @@ class OrderController extends Controller
             $sub_total = 0;
 
             foreach ($request->products as $product) {
+                var_dump($product["id"]);
                 $original_product = Product::find($product['id']);
                 $tot = (($product['quantity'] * $original_product->price) - (($product['quantity'] * $original_product->price) * 1
                 // $product['discount']
@@ -157,13 +158,13 @@ class OrderController extends Controller
                 "status" => "success",
                 "data" => $order,
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => "error",
-                "data"=> $e->getMessage(),
-                "message" =>  "An error occurred while processing the request.",
-            ], 522);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         "status" => "error",
+        //         "data"=> $e->getMessage(),
+        //         "message" =>  "An error occurred while processing the request.",
+        //     ], 522);
+        // }
 
     }
 
