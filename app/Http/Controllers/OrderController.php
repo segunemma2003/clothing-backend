@@ -71,25 +71,23 @@ class OrderController extends Controller
             $validator = Validator::make($request->all(), [
 
                 "total_price" => "required",
+                "customer_id" => "required",
                 "sub_total" => "required",
-                "delivery_fee" => "required",
-                "tax_rate" => "required",
+                // "delivery_fee" => "required",
+                // "tax_rate" => "required",
                 "type_of_delivery" => "required",
                 "products" => "required|array",
                 "products.*.id" => "required",
                 "products.*.quantity" => "required",
-                "products.*.total_price" => "required",
-                "products.*.discount" => "required",
-                "products.*.tax_rate" => "nullable",
-                "products.*.size" => [
-                    'nullable',
-                    'required_unless:products.*.is_measurement,true',
-                ],
-                "products.*.measurements" => [
-                    'nullable',
-                    'required_if:products.*.is_measurement,true',
-                ],
-                "products.*.is_measurement" => "nullable|boolean",
+                // "products.*.size" => [
+                //     'nullable',
+                //     'required_unless:products.*.is_measurement,true',
+                // ],
+                // "products.*.measurements" => [
+                //     'nullable',
+                //     'required_if:products.*.is_measurement,true',
+                // ],
+                // "products.*.is_measurement" => "nullable|boolean",
             ]);
 
             if ($validator->fails()) {
@@ -105,18 +103,34 @@ class OrderController extends Controller
 
             foreach ($request->products as $product) {
                 $original_product = Product::find($product['id']);
-                $tot = (($product['quantity'] * $original_product->price) - (($product['quantity'] * $original_product->price) * $product['discount'])) + $product['tax_rate'];
+                $tot = (($product['quantity'] * $original_product->price) - (($product['quantity'] * $original_product->price) * 1
+                // $product['discount']
+                )) +
+                0;
+                // $product['tax_rate'];
                 $total_price += $tot;
                 $sub_total += $product['quantity'] * $original_product->price;
             }
 
+            if($product["type_of_delivery"] == "STORE_PICKUP"){
+                $delivery_fee = 0;
+
+            }else  if($product["type_of_delivery"] == "lagos"){
+                $delivery_fee = 1000;
+            }else{
+                $delivery_fee = 3000;
+            }
+
             $order = Order::create([
                 "code" => $code,
-                "user_id"=> Auth::user()->id,
-                "total_price" => $total_price,
-                "sub_total" => $sub_total,
-                "delivery_fee" => $request->delivery_fee,
-                "tax_rate" => $request->tax_rate,
+                "user_id"=> $request->customer_id,
+                "address"=> $request->shippingAddress,
+                "total_price" => $request->total_price,
+                "sub_total" => $request->sub_total,
+                "payment_method"=> $request->payment_type,
+                "delivery_fee" => $delivery_fee,
+                "tax_rate" => 0,
+                "send_mail"=> $request->sendEmail,
                 "type_of_delivery" => $request->type_of_delivery,
             ]);
 
@@ -129,13 +143,13 @@ class OrderController extends Controller
                     "product_code" => $code,
                     "total_price" => (($product['quantity'] * $original_product->price) - (($product['quantity'] * $original_product->price) * $product['discount'])) + $product['tax_rate'],
                     "sub_total" => ($product['quantity'] * $original_product->price),
-                    "delivery_fee" => 0.00,
-                    "discount" => $product['discount'],
+                    "delivery_fee" =>$delivery_fee,
+                    "discount" =>0,
                     "quantity" => $product['quantity'],
-                    "tax_rate" => $product['tax_rate'],
+                    "tax_rate" => 0,
                     "size" => $product['size'],
-                    "measurements" => $product['measurements'],
-                    "is_measurement" => $product['is_measurement'],
+                    "measurements" => "",
+                    "is_measurement" => false,
                 ]);
             }
 
