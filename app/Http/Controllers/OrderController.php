@@ -102,7 +102,7 @@ class OrderController extends Controller
             $sub_total = 0;
 
             foreach ($request->products as $product) {
-                var_dump($product["id"]);
+
                 $original_product = Product::find($product['id']);
                 $tot = (($product['quantity'] * $original_product->price) - (($product['quantity'] * $original_product->price) * 1
                 // $product['discount']
@@ -113,10 +113,10 @@ class OrderController extends Controller
                 $sub_total += $product['quantity'] * $original_product->price;
             }
 
-            if($product["type_of_delivery"] == "STORE_PICKUP"){
+            if($request->type_of_delivery == "STORE_PICKUP"){
                 $delivery_fee = 0;
 
-            }else  if($product["type_of_delivery"] == "lagos"){
+            }else  if($request->type_of_delivery == "lagos"){
                 $delivery_fee = 1000;
             }else{
                 $delivery_fee = 3000;
