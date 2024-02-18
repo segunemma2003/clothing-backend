@@ -160,6 +160,7 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "error",
+                "data"=> $e->getMessage(),
                 "message" =>  "An error occurred while processing the request.",
             ], 522);
         }
