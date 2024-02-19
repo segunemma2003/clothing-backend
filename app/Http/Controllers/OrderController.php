@@ -10,7 +10,11 @@ use App\Models\ProductOrder;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
+use Mail;
+use App\Mail\OrderMail;
+use App\Mail\OrderMailCustomer;
 use App\Models\Product;
+use App\Models\User;
 
 class OrderController extends Controller
 {
@@ -153,6 +157,16 @@ class OrderController extends Controller
                     "is_measurement" => false,
                 ]);
             }
+            $user = User::whereId($request->customer_id)->first();
+            $myorder = Order::with("products")->whereId($order->id)->first();
+            $send_mail = ["segunemma2003@gmail.com"];
+            if($request->sendEmail == true){
+                $customer_mail = OrderMailCustomer($user,  $myorder);
+                Mail::to($send_mail)->queue($customer_mail);
+            }
+            $email = OrderMail($user,  $myorder);
+            Mail::to($send_mail)->queue($email);
+
 
             return response()->json([
                 "status" => "success",
