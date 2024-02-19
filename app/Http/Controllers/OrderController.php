@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Mail\OrderMail;
+use App\Mail\OrderMailCustomer;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\ProductOrder;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
-use Mail;
-use App\Mail\OrderMail;
-use App\Mail\OrderMailCustomer;
-use App\Models\Product;
-use App\Models\User;
+
+
 
 class OrderController extends Controller
 {
@@ -161,10 +163,10 @@ class OrderController extends Controller
             $myorder = Order::with("products")->whereId($order->id)->first();
             $send_mail = ["segunemma2003@gmail.com"];
             if($request->sendEmail == true){
-                $customer_mail = OrderMailCustomer($user,  $myorder);
+                $customer_mail = new OrderMailCustomer($user,  $myorder);
                 Mail::to($send_mail)->queue($customer_mail);
             }
-            $email = OrderMail($user,  $myorder);
+            $email = new OrderMail($user,  $myorder);
             Mail::to($send_mail)->queue($email);
 
 
