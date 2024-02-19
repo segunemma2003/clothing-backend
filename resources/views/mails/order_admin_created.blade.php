@@ -31,7 +31,7 @@
         </tbody>
     </table>
 
-    <p><strong>Total Price:</strong> ${{ $order->total_price }}</p>
+    <p><strong>Total Price:</strong> NGN{{ $order->total_price }}</p>
 
     <h2>Shipping Address:</h2>
     <p><strong>Name:</strong> {{ $user->name }}</p>
